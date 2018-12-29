@@ -1,3 +1,3 @@
 #!bin/bash
 
-ebook-convert $1 article.epub
+ebook-convert article.html article.epub
