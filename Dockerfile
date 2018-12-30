@@ -17,10 +17,10 @@ COPY --from=scraper /app/article.html ./
 RUN /bin/sh ebook_converter.sh
 
 FROM ruby:2.6.0
+WORKDIR /app
 COPY --from=converter /app/article.epub ./
 RUN \
     apt-get update
-WORKDIR /app
 RUN gem install pony
 COPY send_to_kindle.rb .env ./
 RUN env `cat .env` ruby send_to_kindle.rb

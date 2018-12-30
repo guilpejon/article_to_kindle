@@ -12,4 +12,11 @@ Pony.options = {
     }
 }
 
-Pony.mail(:to => 'to@gmail.com', :subject => 'hi', :body => 'Hello there.')
+Pony.mail(
+    to: 'to@gmail.com',
+    subject: 'Article',
+    body: '',
+    attachments: {
+        'article.epub' => File.read('/app/article.epub')
+    }
+)
