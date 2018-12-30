@@ -22,5 +22,5 @@ RUN \
     apt-get update
 WORKDIR /app
 RUN gem install pony
-COPY send_to_kindle.rb ./
-RUN ruby send_to_kindle.rb
+COPY send_to_kindle.rb .env ./
+RUN env `cat .env` ruby send_to_kindle.rb
