@@ -1,8 +1,8 @@
 FROM python as scraper
 WORKDIR /app
-COPY requirements.txt ./
+COPY scraper/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
-COPY scraper.py ./
+COPY scraper/scraper.py ./
 RUN python scraper.py
 
 FROM ubuntu as converter
@@ -11,10 +11,10 @@ WORKDIR /app
 RUN \
    apt-get update && \
    apt-get install calibre -y
-COPY ebook_converter.sh ./
-RUN chmod +x /app/ebook_converter.sh
+COPY converter/converter.sh ./
+RUN chmod +x /app/converter.sh
 COPY --from=scraper /app/article.html ./
-RUN /bin/sh ebook_converter.sh
+RUN /bin/sh converter.sh
 
 FROM ruby:2.6.0
 WORKDIR /app
@@ -22,5 +22,5 @@ COPY --from=converter /app/article.mobi ./
 RUN \
     apt-get update
 RUN gem install pony
-COPY send_to_kindle.rb .env ./
-RUN env `cat .env` ruby send_to_kindle.rb
+COPY sender/sender.rb .env ./
+RUN env `cat .env` ruby sender.rb
