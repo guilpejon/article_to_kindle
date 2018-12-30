@@ -1,3 +1,3 @@
 #!bin/bash
 
-ebook-convert article.html article.epub
+ebook-convert article.html article.mobi

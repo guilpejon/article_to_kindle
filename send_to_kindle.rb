@@ -13,10 +13,10 @@ Pony.options = {
 }
 
 Pony.mail(
-    to: 'to@gmail.com',
+    to: 'to@kindle.com',
     subject: 'Article',
     body: '',
     attachments: {
-        'article.epub' => File.read('/app/article.epub')
+        'article.mobi' => File.read('/app/article.mobi')
     }
 )

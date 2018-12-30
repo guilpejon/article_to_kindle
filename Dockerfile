@@ -18,7 +18,7 @@ RUN /bin/sh ebook_converter.sh
 
 FROM ruby:2.6.0
 WORKDIR /app
-COPY --from=converter /app/article.epub ./
+COPY --from=converter /app/article.mobi ./
 RUN \
     apt-get update
 RUN gem install pony
