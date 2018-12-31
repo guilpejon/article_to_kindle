@@ -3,6 +3,8 @@ WORKDIR /app
 COPY scraper/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 COPY scraper/scraper.py ./
+ARG url
+ENV URL $url
 RUN python scraper.py
 
 FROM ubuntu as converter
