@@ -21,8 +21,7 @@ RUN /bin/sh converter.sh
 FROM ruby:2.6.0
 WORKDIR /app
 COPY --from=converter /app/article.mobi ./
-RUN \
-    apt-get update
+RUN apt-get update
 RUN gem install pony
 COPY sender/sender.rb .env ./
 RUN env `cat .env` ruby sender.rb
