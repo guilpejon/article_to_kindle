@@ -14,6 +14,8 @@ Pony.options = {
 
 Pony.mail(
     to: 'to@gmail.com',
+    subject: 'Article',
+    body: '',
     attachments: {
         'article.mobi' => File.read('/app/article.mobi')
     }
