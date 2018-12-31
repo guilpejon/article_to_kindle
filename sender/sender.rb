@@ -17,7 +17,7 @@ Pony.options = {
 article_title = ENV['ARTICLE_TITLE'].gsub(/[^0-9A-Za-z]/, ' ')
 
 Pony.mail(
-  to: 'to@kindle.com',
+  to: ENV['KINDLE_EMAIL'],
   subject: 'Article',
   body: '',
   attachments: {
