@@ -18,7 +18,7 @@ article_title = ENV['ARTICLE_TITLE'].gsub(/[^0-9A-Za-z]/, ' ')
 
 Pony.mail(
   to: ENV['KINDLE_EMAIL'],
-  subject: 'Article',
+  subject: article_title,
   body: '',
   attachments: {
     "#{article_title}.pdf" => File.read('/app/article.pdf')
