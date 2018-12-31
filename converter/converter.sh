@@ -1,3 +1,5 @@
 #!bin/bash
 
-ebook-convert article.html article.mobi
+. /app/.env
+
+ebook-convert article.html article.mobi --title "$ARTICLE_TITLE" --authors "$ARTICLE_AUTHOR"

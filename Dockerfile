@@ -15,7 +15,7 @@ RUN \
    apt-get install calibre -y
 COPY converter/converter.sh ./
 RUN chmod +x /app/converter.sh
-COPY --from=scraper /app/article.html ./
+COPY --from=scraper /app/article.html /app/.env ./
 RUN /bin/sh converter.sh
 
 FROM ruby:2.6.0

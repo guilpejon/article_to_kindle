@@ -14,16 +14,23 @@ page = urllib.request.urlopen(request)
 soup = BeautifulSoup(page, 'html.parser')
 
 # Scrape based on the website
+# Grabs the title and author of the article
+# Saves them in an .env file for the next build phases
 parsed_uri = urlparse(article_url)
 website = parsed_uri.netloc
 if website == 'medium.com':
-    main_content = soup.find('div', {'data-source': 'post_page'})
+    main_content = soup.find('div', {'data-tracking-context': 'postPage'})
+    title = soup.find('h1').getText()
+    author = soup.find('meta', {'property': 'author'})['content']
 else:
     main_content = soup.find('body')
+    title = soup.find('h1').getText()
+    author = ''
 
-# Set the title as an env var for the next build phases
-title = str(soup.find('h1'))
-os.environ["ARTICLE_TITLE"] = title
+# Saves the .env file with the scraped values
+with open('.env', 'w') as file:
+    file.write('ARTICLE_TITLE="' + title + '"\n')
+    file.write('ARTICLE_AUTHOR="' + author + '"')
 
 # Write the article as an html file for the next build phase
 with open('article.html', 'w') as file:
