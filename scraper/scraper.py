@@ -18,14 +18,13 @@ soup = BeautifulSoup(page, 'html.parser')
 # Saves them in an .env file for the next build phases
 parsed_uri = urlparse(article_url)
 website = parsed_uri.netloc
-if website == 'medium.com':
-    main_content = soup.find('div', {'data-tracking-context': 'postPage'})
-    title = soup.find('h1').getText()
-    author = soup.find('meta', {'property': 'author'})['content']
-else:
-    main_content = soup.find('body')
-    title = soup.find('h1').getText()
-    author = ''
+# if website == 'medium.com':
+#     main_content = soup.find('div', {'data-tracking-context': 'postPage'})
+# else:
+#     main_content = soup.find('body')
+main_content = soup.find('div', {'data-tracking-context': 'postPage'})
+title = soup.find('h1').getText()
+author = soup.find('meta', {'property': 'author'})['content']
 
 # Saves the .env file with the scraped values
 with open('.env', 'w') as file:
