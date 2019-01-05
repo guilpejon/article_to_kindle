@@ -1,30 +1,22 @@
-FROM python as scraper
-WORKDIR /app
-COPY scraper/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-COPY scraper/scraper.py ./
-ARG url
-ENV URL $url
-RUN python scraper.py
+FROM ubuntu
 
-FROM ubuntu as converter
 ENV DEBIAN_FRONTEND=noninteractive
-WORKDIR /app
-RUN \
-   apt-get update && \
-   apt-get install calibre -y
-COPY converter/converter.sh ./
-RUN chmod +x /app/converter.sh
-COPY --from=scraper /app/article.html /app/.env ./
-RUN /bin/sh converter.sh
+ENV LANG C.UTF-8
 
-FROM ruby:2.6.0
-WORKDIR /app
-COPY --from=converter /app/article.pdf ./
-RUN apt-get update
-COPY sender/Gemfile ./
-RUN bundle install
-COPY --from=scraper /app/.env ./.scraper_env
-COPY sender/sender.rb .env ./
-RUN cat .scraper_env >> .env
-RUN eval $(echo "$(cat .env) ruby sender.rb" | tr '\n' ' ')
+# WORKDIR /app
+
+RUN \
+  apt-get update && \
+  apt-get install -y --no-install-recommends \
+    python3.7.2 \
+    python3-pip \
+    calibre
+
+COPY requirements.txt ./
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+COPY converter.sh article_to_kindle.py docker-entrypoint.sh .env ./
+RUN chmod +x /converter.sh
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]

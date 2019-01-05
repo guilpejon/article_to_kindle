@@ -1,7 +1,5 @@
 #!bin/bash
 
-. /app/.env
-
 # NO IMAGES
 # No spaces where the images should be
 # ebook-convert article.html article.mobi --title "$ARTICLE_TITLE" --authors "$ARTICLE_AUTHOR"
@@ -18,7 +16,7 @@
 # Include blank page with small res image before each page that has an image
 # Cannot scale the font size
 # Title not working
-ebook-convert article.html article.pdf --authors "$ARTICLE_AUTHOR"
+ebook-convert article.html "$1.pdf" --authors "$2"
 
 # INCLUDE IMAGES
 # No spaces between words on final mobi
