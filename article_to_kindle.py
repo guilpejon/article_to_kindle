@@ -27,7 +27,7 @@ with open('article.html', 'w') as file:
     file.write(str(main_content))
 
 # Call ebook-convert
-os.system("./converter.sh '" + title + "' '" + author + "'")
+os.system("sh converter.sh '" + title + "' '" + author + "'")
 
 # Send email with article as attachment
 gmail_user = os.environ['GMAIL_USER']
@@ -54,7 +54,7 @@ try:
     smtp.starttls()
     smtp.login(gmail_user, os.environ['GMAIL_PASSWORD'])
     smtp.sendmail(gmail_user, send_to, msg.as_string())
-    print('Article Sent!')
     smtp.close()
+    print('Article Sent!')
 except Exception as e:
     print('ERROR: ' + e)
